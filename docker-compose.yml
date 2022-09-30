@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  app:
+    image: oumaymascraping
+    ports:
+      - 8080:80
+    depends_on:
+      mysql_db:
+          condition: service_healthy  
+    
+  mysql_db:
+    container_name: jovial_hypatia
+    image: mysql/mysql-server:latest
+ 
+    environment: 
+      - MYSQL_ROOT_PASSWORD=ouma97
+      - MYSQL_DATABASE=dataextract
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=ouma97
+    healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
+
